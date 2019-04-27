@@ -2,6 +2,7 @@ import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'org.sonarqube'
 
 def versionMajor = 2
 def versionMinor = 4
@@ -211,6 +212,7 @@ dependencies {
                    'com.dropbox.core:dropbox-core-sdk:3.0.3',
                    'com.android.support:multidex:1.0.1'
     )
+
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 

@@ -23,6 +23,7 @@ android:
 
 # XXX: Temporary workaround. Remove once fixed
 before_install:
+    - chmod +x ./gradlew
     - yes | sdkmanager "platforms;android-27"
 
 # Emulator Management: Create, Start and Wait

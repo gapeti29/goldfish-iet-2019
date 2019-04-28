@@ -1,7 +1,5 @@
 language: android
 jdk: oraclejdk8
-dist: trusty
-sudo: required
 android:
   components:
   - platform-tools
@@ -17,11 +15,6 @@ android:
 before_install:
 - chmod +x ./gradlew
 - yes | sdkmanager "platforms;android-27"
-addons:
-  sonarcloud:
-    organization: goldfish
-    token:
-       secure: "cHhC+WXGDDLXajRhgRv7bXrwBX6ed4O+6Sg5TRJ6ppA5D9trm93s/ba3v2wrLZXr4wMVl8EYfI/J1xv+3tNB5KKDSx7wJ+tDzcm2PuXmXHwGS9n6KCc57zY6zOL8sReB173/0b9MUacHMm6Ypmg4FcHGRVCc31qkEAYK2szYYwtKx3Jnfn9H3WwudwQBcV2XwB9S5UOQwfYB5LWLebAVzhrIQEUUxODFuccoQ31Hx1c9Dcm4SxoAa26EUhlmeMK4jXqmsJWGCchwU5LykQrhMRqXs7oFfeVG6ebKYwJHkseCRCEqZZybRY5+xIdftHFmrsoGKAu+LUv2znTMsqqkF/0cjTI6ZLcaZaP3ozHN2bFSPKpN03mSBLJB2utQS/NyOl4Us5nUzh0uZVG9XMn1Dn4dmQhQqougmua9uhMqFVTWJy59BZ59j9HAjYA38Ke3iJIrt5+p+/7qJBJrxD7dCamzGIgxAs5UwSbvDm9YD7lMfYnNjRHNL4zN/5bFAIqF9rF89pSqjyXVa0Tq/TOoeKPB5HU9kGmK0mcAJg149DfgeeFPNu4txFEIGlv1U7AOdCjpHh2XOtBEJuBKokxgmmsfWR3Mzvr6GD/Gh3HG2D2Nvwy3aTrMaf+0vIizDZrepxTVPQUIIWZuUubuyRbu0mF7gCrxQCaYKOON2q2Tjuw="
 script:
 - "./gradlew build"
-- sonar-scanner
+

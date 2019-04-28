@@ -125,8 +125,7 @@ public class BooksDbAdapter extends DatabaseAdapter<Book> {
      * @return GUID of the currently active book
      */
     public String setActive(@NonNull String bookUID){
-        if (bookUID == null)
-            return getActiveBookUID();
+
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(BookEntry.COLUMN_ACTIVE, 0);

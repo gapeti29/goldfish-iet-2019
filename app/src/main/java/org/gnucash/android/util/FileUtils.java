@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -22,22 +23,24 @@ public final class FileUtils {
     private static final String LOG_TAG = "FileUtils";
 
     public static void zipFiles(List<String> files, String zipFileName) throws IOException {
-        OutputStream outputStream = new FileOutputStream(zipFileName);
-        ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream);
         byte[] buffer = new byte[1024];
-        for (String fileName : files) {
-            File file = new File(fileName);
-            FileInputStream fileInputStream = new FileInputStream(file);
-            zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+        try (OutputStream outputStream = new FileOutputStream(zipFileName);
+        ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)){
+            for (String fileName : files) {
+                File file = new File(fileName);
+                try(FileInputStream fileInputStream = new FileInputStream(file)) {
+                    zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
 
-            int length;
-            while ((length = fileInputStream.read(buffer)) > 0) {
-                zipOutputStream.write(buffer, 0, length);
+                    int length;
+                    while ((length = fileInputStream.read(buffer)) > 0) {
+                        zipOutputStream.write(buffer, 0, length);
+                    }
+                    zipOutputStream.closeEntry();
+                    fileInputStream.close();
+                    outputStream.close();
+                }
             }
-            zipOutputStream.closeEntry();
-            fileInputStream.close();
         }
-        zipOutputStream.close();
     }
 
     /**
@@ -49,14 +52,8 @@ public final class FileUtils {
     public static void moveFile(String src, String dst) throws IOException {
         File srcFile = new File(src);
         File dstFile = new File(dst);
-        FileChannel inChannel = new FileInputStream(srcFile).getChannel();
-        FileChannel outChannel = new FileOutputStream(dstFile).getChannel();
-        try {
+        try (FileInputStream inputStream = new FileInputStream(srcFile); FileOutputStream outputStream = new FileOutputStream(dstFile); FileChannel inChannel = inputStream.getChannel(); FileChannel outChannel = outputStream.getChannel()) {
             inChannel.transferTo(0, inChannel.size(), outChannel);
-        } finally {
-            if (inChannel != null)
-                inChannel.close();
-            outChannel.close();
         }
         srcFile.delete();
     }

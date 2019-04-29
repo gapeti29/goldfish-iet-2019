@@ -119,7 +119,8 @@ public class TransactionsDbAdapter extends DatabaseAdapter<Transaction> {
                 } else {
                     mSplitsDbAdapter.addRecord(split, updateMethod);
                 }
-                splitUIDs.add(split.getUID());
+                if (split != null)
+                    splitUIDs.add(split.getUID());
             }
             Log.d(LOG_TAG, transaction.getSplits().size() + " splits added");
 

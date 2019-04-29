@@ -119,9 +119,6 @@ public class BackupManager {
 
                 ExportParams params = new ExportParams(ExportFormat.XML);
                 new GncXmlExporter(params).generateExport(writer);
-                writer.close();
-                bufferedOutputStream.close();
-                gzipOutputStream.close();
                 outputStream.close();
                 return true;
             }

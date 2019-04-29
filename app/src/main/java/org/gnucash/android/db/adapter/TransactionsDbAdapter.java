@@ -513,8 +513,6 @@ public class TransactionsDbAdapter extends DatabaseAdapter<Transaction> {
      * @return Number of splits belonging to the transaction
      */
     public long getSplitCount(@NonNull String transactionUID){
-        if (transactionUID == null)
-            return 0;
         String sql = "SELECT COUNT(*) FROM " + SplitEntry.TABLE_NAME
                 + " WHERE " + SplitEntry.COLUMN_TRANSACTION_UID + "= '" + transactionUID + "'";
         SQLiteStatement statement = mDb.compileStatement(sql);

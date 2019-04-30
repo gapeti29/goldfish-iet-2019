@@ -85,7 +85,7 @@ public abstract class Exporter {
      */
     private final File mCacheDir;
 
-    private static final SimpleDateFormat EXPORT_FILENAME_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    //private final SimpleDateFormat EXPORT_FILENAME_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
 
     /**
      * Adapter for retrieving accounts to export
@@ -159,6 +159,7 @@ public abstract class Exporter {
      * @return String containing the file name
      */
     public static String buildExportFilename(ExportFormat format, String bookName) {
+        final SimpleDateFormat EXPORT_FILENAME_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
         return EXPORT_FILENAME_DATE_FORMAT.format(new Date(System.currentTimeMillis()))
                 + "_gnucash_export_" + sanitizeFilename(bookName) +
                 (format == ExportFormat.CSVA ? "_accounts" : "") +
@@ -172,6 +173,8 @@ public abstract class Exporter {
      * @return Date in milliseconds
      */
     public static long getExportTime(String filename){
+        final SimpleDateFormat EXPORT_FILENAME_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+
         String[] tokens = filename.split("_");
         long timeMillis = 0;
         if (tokens.length < 2){

@@ -314,7 +314,7 @@ public class SplitEditorFragment extends Fragment {
             }
 
             if (expression != null && expression.validate().isValid()) {
-                return new BigDecimal(expression.evaluate());
+                return BigDecimal.valueOf(expression.evaluate());
             } else {
                 Log.v(SplitEditorFragment.this.getClass().getSimpleName(),
                         "Incomplete expression for updating imbalance: " + expression);

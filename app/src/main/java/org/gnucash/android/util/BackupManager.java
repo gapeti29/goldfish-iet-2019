@@ -46,6 +46,7 @@ import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.GZIPOutputStream;
 
 
@@ -73,15 +74,14 @@ public class BackupManager {
             }
 
             try (BufferedOutputStream bufferedOutputStream =
-                    new BufferedOutputStream(context.getContentResolver().openOutputStream(Uri.parse(backupFile)))){
-                GZIPOutputStream gzipOutputStream = new GZIPOutputStream(bufferedOutputStream);
-                OutputStreamWriter writer = new OutputStreamWriter(gzipOutputStream);
+                         new BufferedOutputStream(Objects.requireNonNull(context.getContentResolver().openOutputStream(Uri.parse(backupFile))));
+                 GZIPOutputStream gzipOutputStream = new GZIPOutputStream(bufferedOutputStream);
+                 OutputStreamWriter writer = new OutputStreamWriter(gzipOutputStream)) {
+
                 ExportParams params = new ExportParams(ExportFormat.XML);
                 new GncXmlExporter(params).generateExport(writer);
-                writer.close();
             } catch (IOException ex) {
                 Log.e(LOG_TAG, "Auto backup failed for book " + bookUID);
-                ex.printStackTrace();
                 Crashlytics.logException(ex);
             }
         }
@@ -113,15 +113,15 @@ public class BackupManager {
                 backupFile = getBackupFilePath(bookUID);
                 outputStream = new FileOutputStream(backupFile);
             }
+            try(BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(Objects.requireNonNull(outputStream));
+                GZIPOutputStream  gzipOutputStream = new GZIPOutputStream(bufferedOutputStream);
+                OutputStreamWriter writer = new OutputStreamWriter(gzipOutputStream)){
 
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
-            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(bufferedOutputStream);
-            OutputStreamWriter writer = new OutputStreamWriter(gzipOutputStream);
-
-            ExportParams params = new ExportParams(ExportFormat.XML);
-            new GncXmlExporter(params).generateExport(writer);
-            writer.close();
-            return true;
+                ExportParams params = new ExportParams(ExportFormat.XML);
+                new GncXmlExporter(params).generateExport(writer);
+                outputStream.close();
+                return true;
+            }
         } catch (IOException | Exporter.ExporterException e) {
             Crashlytics.logException(e);
             Log.e("GncXmlExporter", "Error creating XML  backup", e);

@@ -215,6 +215,8 @@ public class AccountPreferencesFragment extends PreferenceFragmentCompat impleme
                         Crashlytics.logException(e);
                         Toast.makeText(getActivity(), "An error occurred during the Accounts CSV export",
                                 Toast.LENGTH_LONG).show();
+
+                        Thread.currentThread().interrupt();
                     }
                 }
         }

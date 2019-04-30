@@ -264,7 +264,7 @@ public class CalculatorEditText extends AppCompatEditText {
         }
 
         if (expression != null && expression.validate().isValid()) {
-            BigDecimal result = new BigDecimal(expression.evaluate());
+            BigDecimal result = BigDecimal.valueOf(expression.evaluate());
             setValue(result);
         } else {
             setError(getContext().getString(R.string.label_error_invalid_expression));

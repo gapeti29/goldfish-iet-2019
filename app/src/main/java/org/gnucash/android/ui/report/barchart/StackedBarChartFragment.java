@@ -376,6 +376,7 @@ public class StackedBarChartFragment extends BaseReportFragment {
         String label = mChart.getData().getXVals().get(entry.getXIndex()) + ", "
                 + stackLabels.substring(1, stackLabels.length() - 1).split(",")[index];
         double value = Math.abs(entry.getVals()[index]);
+
         double sum = 0;
         if (mTotalPercentageMode) {
             for (BarEntry barEntry : mChart.getData().getDataSetByIndex(dataSetIndex).getYVals()) {
@@ -384,7 +385,8 @@ public class StackedBarChartFragment extends BaseReportFragment {
         } else {
             sum = entry.getNegativeSum() + entry.getPositiveSum();
         }
-        mSelectedValueTextView.setText(String.format(SELECTED_VALUE_PATTERN, label.trim(), value, value / sum * 100));
+
+        mSelectedValueTextView.setText(String.format(SELECTED_VALUE_PATTERN, label.trim(), value, value / (sum == 0 ? 1 : sum) * 100));
     }
 
 }

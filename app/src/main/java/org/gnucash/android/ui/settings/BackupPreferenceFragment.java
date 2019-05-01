@@ -459,11 +459,8 @@ public class BackupPreferenceFragment extends PreferenceFragmentCompat implement
 				break;
 
 			case REQUEST_BACKUP_FILE:
-				if (resultCode == Activity.RESULT_OK){
-					Uri backupFileUri = null;
-					if (data != null){
-						backupFileUri = data.getData();
-					}
+				if (resultCode == Activity.RESULT_OK && data != null){
+					Uri backupFileUri = data.getData();
 
 					final int takeFlags = data.getFlags()
 							& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

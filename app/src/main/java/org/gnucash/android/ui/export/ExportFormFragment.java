@@ -573,10 +573,8 @@ public class ExportFormFragment extends Fragment implements
 				break;
 
 			case REQUEST_EXPORT_FILE:
-				if (resultCode == Activity.RESULT_OK){
-					if (data != null){
-						mExportUri = data.getData();
-					}
+				if (resultCode == Activity.RESULT_OK && data != null){
+					mExportUri = data.getData();
 
 					final int takeFlags = data.getFlags()
 							& (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

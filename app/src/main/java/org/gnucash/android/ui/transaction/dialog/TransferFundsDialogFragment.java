@@ -193,7 +193,7 @@ public class TransferFundsDialogFragment extends DialogFragment {
      * Converts the currency amount with the given exchange rate and saves the price to the db
      */
     private void transferFunds() {
-        Price price = null;
+        Price price = new Price();
 
         String originCommodityUID = mOriginAmount.getCommodity().getUID();
         String targetCommodityUID = mTargetCommodity.getUID();

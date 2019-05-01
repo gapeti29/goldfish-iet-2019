@@ -53,7 +53,7 @@ public class CsvTransactionsExporter extends Exporter{
 
     private char mCsvSeparator;
 
-    private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     /**
      * Construct a new exporter with export parameters

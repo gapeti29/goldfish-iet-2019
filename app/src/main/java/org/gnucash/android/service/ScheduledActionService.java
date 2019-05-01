@@ -178,6 +178,8 @@ public class ScheduledActionService extends JobIntentService {
         } catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
             Log.e(LOG_TAG, e.getMessage());
+
+            Thread.currentThread().interrupt();
         }
         if (!result) {
             Log.i(LOG_TAG, "Backup/export did not occur. There might have been no"
